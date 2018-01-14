@@ -1,2 +1,2 @@
 # Notebook
-Record my learning note in multiareas
+Share my learning notes in Algo and ML.
