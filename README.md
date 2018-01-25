@@ -26,4 +26,8 @@ Share my learning notes in Algo and ML.
 
 * PathNet
 
-      Learning....
+[[report]](https://github.com/Wind-Wing/Notebook/edit/master/pathnet.md)
+[[code]](https://github.com/XJTUWYD/pathnet)
+[[paper]](https://arxiv.org/pdf/1701.08734.pdf)
+
+      Processing....
