@@ -14,35 +14,37 @@ file binary_mnist_pathnet_with_conv.py
 1. 数据分为a、b是针对两个不同的task
 2. 数据分为a1与a2是因为这只是一个二分类任务，而mnist是一个十分类任务。因此要提取出两中样本并且把标签也修改为二分类的形式
 ### variables
-x                   # input images
-y_                  # input labels
-y                   # reference labels
+    x                   # input images
+    y_                  # input labels
+    y                   # reference labels
 
-geopath             M*L=1       #
-fixed_list          M*L=0       # mark fixed path and modules
-weight_list         M*L=normal  # record weights in every module
-biases_list         M*L=0.1     # record biases in every module
-layer_modules_list  M  =None    # store output of each module in a layer for calc sum average.
+    geopath             M*L=1       #
+    fixed_list          M*L=0       # mark fixed path and modules
+    weight_list         M*L=normal  # record weights in every module
+    biases_list         M*L=0.1     # record biases in every module
+    layer_modules_list  M  =None    # store output of each module in a layer for calc sum average.
 
-var_list_to_learn               # record all the variables need to learn, ex: weights, biases
-accuracy            1*1         # accuracy of current batch
-train_step          op          # ops to minimizs cross_entropy on var_list_to_learn
-geopath_set         candi*L*M   # store all candiants
+    var_list_to_learn               # record all the variables need to learn, ex: weights, biases
+    accuracy            1*1         # accuracy of current batch
+    train_step          op          # ops to minimizs cross_entropy on var_list_to_learn
+    geopath_set         candi*L*M   # store all candiants
 
-var_update_ops          len(var_list_to_learn)  # ops of assigning var_update_placeholders[i] to var_list_to_learn[i]
-var_update_placeholders len(var_list_to_learn)  # shape of var_list_to_learn[i]
-geopath_update_ops          M*L # ops of assigning geopath_update_placeholders[i][j] to geopath[i][j]
-geopath_update_placeholders M*L # shape of geopath[i][j]
+    var_update_ops          len(var_list_to_learn)  # ops of assigning var_update_placeholders[i] to var_list_to_learn[i]
+    var_update_placeholders len(var_list_to_learn)  # shape of var_list_to_learn[i]
+    geopath_update_ops          M*L # ops of assigning geopath_update_placeholders[i][j] to geopath[i][j]
+    geopath_update_placeholders M*L # shape of geopath[i][j]
 
-var_fix_ops                 len(var_list_to_fix) # 同上
-var_fix_placeholders        len(var_list_to_fix) # 同上
-var_list_to_fix                 # a list record fixed weights and biases
-var_list_fix                    # packup the value of weights and biases in var_list_to_fix
+    var_fix_ops                 len(var_list_to_fix) # 同上
+    var_fix_placeholders        len(var_list_to_fix) # 同上
+    var_list_to_fix                 # a list record fixed weights and biases
+    var_list_fix                    # packup the value of weights and biases in var_list_to_fix
 
 
-##　pipline
+## pipline
 1. 遗传算法
 2. fix task1
+3. train task2
+
 ### net struct
 如果fixed_list == 0, 则将该处的weights和biases加入var_list_to_learn
 ### 遗传算法
@@ -82,10 +84,11 @@ var_list_fix                    # packup the value of weights and biases in var_
 
 # Need to learn 
 1. A3C
-异步的优势行动者评论家算法（Asynchronous Advantage Actor-Critic，A3C）是Mnih等人根据异步强化学习（Asynchronous Reinforcement Learning， ARL） 的思想，提出的一种轻量级的 DRL(Deep reinforcement learning) 框架，该框架可以使用异步的梯度下降法来优化网络控制器的参数，并可以结合多种RL算法。
-Q学习是一种model-free（不用学习环境模型）的基于off-policy（学习过程中执行的策略与值估计使用的策略不一样）的temporal difference（TD）方法，也是RL中流传最为广泛的一种学习方法。
-其实深度学习本身也正是把更多注意力拉回到特征学习上来。
-深度学习前的神经网络功能上只用于分类或回归，没有无监督学习提取特征的功能，因此难以直接处理裸数据，比如像素级数据（raw pixels）。
+
+        异步的优势行动者评论家算法（Asynchronous Advantage Actor-Critic，A3C）是Mnih等人根据异步强化学习（Asynchronous Reinforcement Learning， ARL） 的思想，提出的一种轻量级的 DRL(Deep reinforcement learning) 框架，该框架可以使用异步的梯度下降法来优化网络控制器的参数，并可以结合多种RL算法。
+        Q学习是一种model-free（不用学习环境模型）的基于off-policy（学习过程中执行的策略与值估计使用的策略不一样）的temporal difference（TD）方法，也是RL中流传最为广泛的一种学习方法。
+        其实深度学习本身也正是把更多注意力拉回到特征学习上来。
+        深度学习前的神经网络功能上只用于分类或回归，没有无监督学习提取特征的功能，因此难以直接处理裸数据，比如像素级数据（raw pixels）。
 
 2. In A3C : a value function readout and a policy readout
 
