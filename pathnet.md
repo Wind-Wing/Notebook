@@ -81,7 +81,6 @@ file binary_mnist_pathnet_with_conv.py
     4. feed 只在调用它的方法内有效, 方法结束, feed 就会消失。
 * sess.run(tf.global_variables_initializer()) 
     就是 run了 所有global Variable 的 assign op，这就是初始化参数的本来面目。
-* 参数(存储开销)的数量主要集中在全连接层，运算量(时间开销)主要集中在卷积池化之类的。
 
 # Need to learn 
 1. A3C
