@@ -38,3 +38,10 @@ Share my learning notes in Algo and ML.
 [[paper]](http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=726791)
 
       Learning....
+
+* NeST
+
+[[note]](https://github.com/Wind-Wing/Notebook/edit/master/NeST.md)
+[[paper]](https://arxiv.org/abs/1711.02017?context=cs.AI)
+
+      Learning
