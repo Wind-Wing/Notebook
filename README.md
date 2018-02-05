@@ -26,7 +26,7 @@ Share my learning notes in Algo and ML.
 
 * PathNet
 
-[[report]](https://github.com/Wind-Wing/Notebook/edit/master/pathnet.md)
+[[report]](https://github.com/Wind-Wing/Notebook/blob/master/pathnet.md)
 [[code]](https://github.com/XJTUWYD/pathnet)
 [[paper]](https://arxiv.org/pdf/1701.08734.pdf)
 
@@ -34,14 +34,14 @@ Share my learning notes in Algo and ML.
 
 * LeNet
 
-[[note]](https://github.com/Wind-Wing/Notebook/edit/master/LeNet.md)
+[[note]](https://github.com/Wind-Wing/Notebook/blob/master/LeNet.md)
 [[paper]](http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=726791)
 
       Learning....
 
 * NeST
 
-[[note]](https://github.com/Wind-Wing/Notebook/edit/master/NeST.md)
+[[note]](https://github.com/Wind-Wing/Notebook/blob/master/NeST.md)
 [[paper]](https://arxiv.org/abs/1711.02017?context=cs.AI)
 
       Learning
