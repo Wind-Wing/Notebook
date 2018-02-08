@@ -86,7 +86,7 @@
     * 剪枝之前先进行归一化操作（Batch Normalize），根据归一化之后的值进行剪枝。
     * 主要目的是减少空间占用，同时减少计算能力的需求。
     * 权重剪枝是一个迭代的过程，每一轮只减去最小的一些权重，然后进行训练以恢复准确率。
-    * 更多的信息可以参考我之前的工作 [Pruning-on-CNN](https://github.com/Wind-Wing/Pruning-on-CNN)
+    * 更多的信息可以参考之前的工作 [Pruning-on-CNN](https://github.com/Wind-Wing/Pruning-on-CNN)
     >
     > 部分区域卷积
     * pipeline ![alt tag](https://github.com/Wind-Wing/readme_images/blob/master/NeST_Algo3.png)
