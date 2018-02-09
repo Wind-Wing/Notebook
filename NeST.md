@@ -86,7 +86,7 @@
     * 剪枝之前先进行归一化操作（Batch Normalize），根据归一化之后的值进行剪枝。
     * 主要目的是减少空间占用，同时减少计算能力的需求。
     * 权重剪枝是一个迭代的过程，每一轮只减去最小的一些权重，然后进行训练以恢复准确率。
-    * 更多的信息可以参考之前的工作 [Pruning-on-CNN](https://github.com/Wind-Wing/Pruning-on-CNN)
+    * 更多的信息可以参考我之前的工作 [Pruning-on-CNN](https://github.com/Wind-Wing/Pruning-on-CNN)
     >
     > 部分区域卷积
     * pipeline ![alt tag](https://github.com/Wind-Wing/readme_images/blob/master/NeST_Algo3.png)
@@ -102,6 +102,25 @@
     * mask矩阵对应特征图大小，通过mask矩阵记录特征图上的某个像素点是否要卷积生成从而判断对于相应的输入图区域是否要卷积。
     * 这一过程是通过修改某个卷积核与某个像素点之间的连接是否建立来完成的。
     * 卷积核对于图像感兴趣的区域也是通过一个迭代的过程建立的。每次修剪掉一些不感兴趣的区域后进行重新训练以恢复准确率。
+    * 在LeNet5 on MNIST上，观察到了卷积核普遍对于图像中心区域比较感兴趣。
+
+# 实验结果
+1. 对于MNIST和ImageNet数据集，分别基于LeNet与AlexNet构造种子网络。
+2. 种子网络的神经元个数、卷积核个数、连接个数都少于原来的网络。对于权重可以做随机初始化，但是要保证种子种所有的神经元都是连通的，不能存在孤岛现象。
+3. 增长过程（Growth Phase）
+
+    * 越小的种子增长后生成的网络越小，对应的修剪后的网络也越小。但是需要越长的增长时间开销。
+    * 对于一个任务，存在一个最小的种子大小。如果小于这个大小，只会增加增长时间，而不会缩小最后生成的网络。
+4. 剪枝过程（Pruning Phase）
+
+    * 剪枝前的网络规模越大，剪枝后的压缩率越大。这是因为对于同一个任务，在剪枝前网络规模越大，存在网络冗余情况越严重。
+    * 剪枝前网络规模越大，剪枝后的网络规模也越大。
+5. NeST网络生成的网络比所有只进行剪枝的方法效果更好。这是由剪枝的基本限制决定的：剪枝前网络规模越大，剪枝后的网络规模也越大。因此，由于剪枝前的网络并不是最小的，所有的纯剪枝方法都会从剪枝前的网络中继承一定数量的次优性（网络冗余）。
+6. 激活函数更换机制（activation function shift mechanism）
+    * 由于ReLU在训练时存在“dying ReLU”问题：当一个ReLU神经元进入不激活状态后，由于梯度为0，会一直卡在未激活状态。
+    * 在增长阶段（Growth Phase），可以采用Leaky ReLU来缓解“dying ReLU”问题，提高准确率。
+    * 增长完成后，将所有的Leaky ReLU更换为ReLU，然后重新训练以保持准确率。
+    * 在剪枝时，保持ReLU来利用ReLU存在0输出区域的特性，来减少FLOP开销。
     
 
 # NeST与人脑学习过程的关系
@@ -110,10 +129,9 @@
 3. 大脑中只有一小部分神经元在所有时间里都是活跃的，这种现象被称为稀疏神经元反应。这种机制允许人类大脑在超低功耗下运行（20W）。而全连接的神经网络在推理中存在大量无意义的神经元反应。为了解决这个问题，普林斯顿的研究者们在NeST 中加入了一个基于重要性的神经元/连接修剪算法来消除冗余，从而实现了稀疏性和紧凑性。这大大减少了存储和计算需求。
 4. 参考资料：https://www.jianshu.com/p/fd81bfa6791f
 
-
-
 # Need to learn
 1. Hebbian理论与其具体数学表达形式，结合page5推导。
 2. 在实现中，卷积层在卷积之前会把输入层的值与一个weight矩阵相乘么？即是否对于输入的图片有一个连接强度。
 3. 卷积层的BP算法如何进行？
-4. 内部协变位移？
+4. 内部协变位移( internal covariate shift )？
+5. We use batch normalization instead of dropout in our implementation, since batch normalization can act as a regularizer and eliminate the need for dropout. dropout与BN的作用、操作、区别
